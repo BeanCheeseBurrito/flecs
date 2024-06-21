@@ -15103,9 +15103,13 @@ void flecs_log_msg(
     int32_t line,  
     const char *msg)
 {
+    fprintf(stderr, "%s\n", file);
+    fprintf(stderr, "%d\n", line);
+    fprintf(stderr, "%s\n", msg);
+
     FILE *stream = ecs_os_api.log_out_;
     if (!stream) {
-        stream = stdout;
+        stream = stderr;
     }
 
     bool use_colors = ecs_os_api.flags_ & EcsOsApiLogWithColors;

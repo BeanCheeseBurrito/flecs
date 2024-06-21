@@ -209,19 +209,34 @@ void Rest_named_query(void) {
 }
 
 void Rest_tables(void) {
+    printf("CREATE WORLD\n");
+    fprintf(stderr, "CREATE WORLD\n");
+    ecs_log_set_level(2);
     ecs_world_t *world = ecs_init();
+    printf("WORLD CREATED\n");
+    fprintf(stderr, "WORLD CREATED \n");
 
     ecs_http_server_t *srv = ecs_rest_server_init(world, NULL);
     test_assert(srv != NULL);
+
+    printf("SERVER CREATED\n");
+    fprintf(stderr, "SERVER CREATED \n");
 
     ecs_http_reply_t reply = ECS_HTTP_REPLY_INIT;
     test_int(0, ecs_http_server_request(srv, "GET",
         "/tables", &reply));
     test_int(reply.code, 200);
+
+    printf("REQUEST MADE\n");
+    fprintf(stderr, "REQUEST MADE\n");
     
     char *reply_str = ecs_strbuf_get(&reply.body);
     test_assert(reply_str != NULL);
+    printf("%s\n", reply_str);
     ecs_os_free(reply_str);
+
+    printf("SERVER FINI\n");
+    fprintf(stderr, "SERVER FINI\n");
 
     ecs_rest_server_fini(srv);
 
